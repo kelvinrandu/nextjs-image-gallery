@@ -1,10 +1,32 @@
 import Head from "next/head";
-import { Flex } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 export default function Home() {
 	return (
-		<Flex as="nav" position="fixed" m={5} p={8}>
-			home
-		</Flex>
+		<>
+			<Head>
+				<title> NextJS Image Gallery</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+
+			<Box
+				overflow="hidden"
+				bgGradient="linear(to-r, green.200, pink.500)"
+				minH="100vh"
+			>
+				<Container>
+					<Text
+						color="pink.900"
+						fontWeight="bold"
+						mb="1rem"
+						textAlign="center"
+						textDecoration="none"
+						fontSize={["4xl", "4xl", "5xl", "5xl"]}
+					>
+						NextJS Image Gallery
+					</Text>
+				</Container>
+			</Box>
+		</>
 	);
 }
