@@ -1,7 +1,10 @@
+import React,{ useState} from "react"
 import Head from "next/head";
 import { Box, Container, Text } from "@chakra-ui/react";
+import { getCuratedPhotos } from "../lib/api";
 
-export default function Home() {
+export default function Home({ data }) {
+	const [photos,setPhotos] = usestate(data);
 	return (
 		<>
 			<Head>
@@ -29,4 +32,12 @@ export default function Home() {
 			</Box>
 		</>
 	);
+}
+export async function getServerSideProps() {
+	const data = await getCuratedPhotos();
+	return {
+		props: {
+			data,
+		},
+	};
 }
