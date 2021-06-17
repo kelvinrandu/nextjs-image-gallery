@@ -1,5 +1,6 @@
 const API_KEY = process.env.NEXT_PUBLIC_PEXELS_API_KEY;
 
+// fetch all photos
 export const getCuratedPhotos = async () => {
   const res = await fetch(
     `https://api.pexels.com/v1/curated?page=11&per_page=18`,
@@ -13,6 +14,7 @@ export const getCuratedPhotos = async () => {
   return responseJson.photos;
 };
 
+// search photo
 export const getQueryPhotos = async (query) => {
   const res = await fetch(`https://api.pexels.com/v1/search?query=${query}`, {
     headers: {
@@ -21,4 +23,15 @@ export const getQueryPhotos = async (query) => {
   });
   const responseJson = await res.json();
   return responseJson.photos;
+};
+ 
+// fetch single photo
+export const getPhotoById = async (id) => {
+  const res = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
+    headers: {
+      Authorization: API_KEY,
+    },
+  });
+  const responseJson = await res.json();
+  return responseJson;
 };

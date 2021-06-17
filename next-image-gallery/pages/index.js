@@ -10,20 +10,34 @@ import {
 	IconButton,
 	InputRightElement,
 	InputGroup,
+	useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { getCuratedPhotos, getQueryPhotos } from "../lib/api";
 import { SearchIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 
 export default function Home({ data }) {
 	const [photos, setPhotos] = useState(data);
 	const [query, setQuery] = useState("");
+	const toast = useToast();
 
 	const handleSubmit = async (e) => {
 		await e.preventDefault();
-		const res = await getQueryPhotos(query);
-		await setPhotos(res);
-		await setQuery("");
+		if (query == "") {
+			toast({
+				title: "Error.",
+				description: "Empty Search querry",
+				status: "error",
+				duration: 4000,
+				isClosable: true,
+				position: "top",
+			});
+		} else {
+			const res = await getQueryPhotos(query);
+			await setPhotos(res);
+			await setQuery("");
+		}
 	};
 	return (
 		<>
@@ -83,12 +97,16 @@ export default function Home({ data }) {
 							lineHeight="0"
 							_hover={{ boxShadow: "dark-lg" }}
 						>
-							<Image
-								src={photo.src.portrait}
-								height={600}
-								width={400}
-								alt={photo.url}
-							/>
+							<Link href={`/photos/${photo.id}`}>
+								<a>
+									<Image
+										src={photo.src.portrait}
+										height={600}
+										width={400}
+										alt={photo.url}
+									/>
+								</a>
+							</Link>
 						</WrapItem>
 					))}
 				</Wrap>
